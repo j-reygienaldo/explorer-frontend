@@ -1,4 +1,6 @@
 import { getSubfolder } from "@/lib/api";
+import { faFolder } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 interface Folder {
@@ -30,6 +32,9 @@ export default function SubfolderList({ selectedFolderId }: Props) {
       ) : (
         subfolders.map((folder) => (
           <div key={folder.id} className="py-1">
+            <span className="mr-1">
+              <FontAwesomeIcon icon={faFolder} />
+            </span>
             {folder.name}
           </div>
         ))

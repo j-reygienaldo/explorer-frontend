@@ -1,4 +1,6 @@
 import { getAllParentFolder } from "@/lib/api";
+import { faFolder } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 interface Folder {
@@ -28,6 +30,9 @@ export default function FolderTree({ onFolderClick }: Props) {
           className="cursor-pointer hover:underline"
           onClick={() => onFolderClick(folder.id)}
         >
+          <span className="mr-1">
+            <FontAwesomeIcon icon={faFolder} />
+          </span>
           {folder.name}
         </div>
       ))}
