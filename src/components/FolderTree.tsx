@@ -1,5 +1,10 @@
 import { getAllParentFolder } from "@/lib/api";
-import { faFolder } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFolder,
+  faFileWord,
+  faFileAudio,
+  faFileImage,
+} from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
@@ -7,6 +12,7 @@ interface Folder {
   id: number;
   name: string;
   parent_id: number | null;
+  type: string | null;
 }
 
 interface Props {
@@ -22,16 +28,33 @@ export default function FolderTree({ onFolderClick }: Props) {
     });
   }, []);
 
+  const switchIcon = (type: string | null) => {
+    switch (type) {
+      case "document":
+        return faFileWord;
+        break;
+      case "image":
+        return faFileImage;
+        break;
+      case "music":
+        return faFileAudio;
+        break;
+      default:
+        return faFolder;
+        break;
+    }
+  };
+
   return (
     <div className="p-4 border-r h-full overflow-y-auto">
-      {folders.map((folder) => (
+      {folders.map((folder, idx) => (
         <div
-          key={folder.id}
+          key={idx}
           className="cursor-pointer hover:underline"
-          onClick={() => onFolderClick(folder.id)}
+          onClick={!folder.type ? () => onFolderClick(folder.id) : () => {}}
         >
           <span className="mr-1">
-            <FontAwesomeIcon icon={faFolder} />
+            <FontAwesomeIcon icon={switchIcon(folder.type)} />
           </span>
           {folder.name}
         </div>

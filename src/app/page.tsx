@@ -14,6 +14,7 @@ export default function Home() {
         <FolderTree onFolderClick={setSelectedFolderId} />
       </div>
       <div className="w-2/3">
+        <div className="border-b h-10"></div>
         <SubfolderList selectedFolderId={selectedFolderId} />
       </div>
     </div>

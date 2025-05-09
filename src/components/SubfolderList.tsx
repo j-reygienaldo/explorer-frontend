@@ -1,5 +1,10 @@
 import { getSubfolder } from "@/lib/api";
-import { faFolder } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFileAudio,
+  faFileImage,
+  faFileWord,
+  faFolder,
+} from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
@@ -7,6 +12,7 @@ interface Folder {
   id: number;
   name: string;
   parent_id: number | null;
+  type: string | null;
 }
 
 interface Props {
@@ -22,6 +28,23 @@ export default function SubfolderList({ selectedFolderId }: Props) {
     }
   });
 
+  const switchIcon = (type: string | null) => {
+    switch (type) {
+      case "document":
+        return faFileWord;
+        break;
+      case "image":
+        return faFileImage;
+        break;
+      case "music":
+        return faFileAudio;
+        break;
+      default:
+        return faFolder;
+        break;
+    }
+  };
+
   if (selectedFolderId === null)
     return <div className="p-4">Click a folder to view subfolder</div>;
 
@@ -30,10 +53,10 @@ export default function SubfolderList({ selectedFolderId }: Props) {
       {subfolders.length === 0 ? (
         <p>No subfolder</p>
       ) : (
-        subfolders.map((folder) => (
-          <div key={folder.id} className="py-1">
+        subfolders.map((folder, idx) => (
+          <div key={idx} className="py-1 cursor-pointer hover:underline">
             <span className="mr-1">
-              <FontAwesomeIcon icon={faFolder} />
+              <FontAwesomeIcon icon={switchIcon(folder.type)} />
             </span>
             {folder.name}
           </div>
